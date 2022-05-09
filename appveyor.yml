@@ -14,15 +14,12 @@ install:
   - ps: Install-Product node $env:nodejs_version x64
   - set PATH=%programfiles(x86)%\\Microsoft SDKs\TypeScript\2.4;%PATH%
 
-  - appveyor DownloadFile https://github.com/fttx/barcode-to-pc-server/blob/master/electron/electron-resources/Bonjour64.msi?raw=true
+  - appveyor DownloadFile https://github.com/f9alejandro/barcode-to-pc-server/blob/master/electron/electron-resources/Bonjour64.msi?raw=true
   - msiexec /i Bonjour64.msi /qn
   - del Bonjour64.msi
   - appveyor DownloadFile %BONJOUR_SDK_DOWNLOAD%
   - bonjoursdksetup.exe /quiet
   - del bonjoursdksetup.exe
-
-  - git config --global user.email "filippo.tortomasi@gmail.com"
-  - git config --global user.name "Filippo Tortomasi"
 
   - ps: $env:package_version = (Get-Content -Raw -Path electron\package.json | ConvertFrom-Json).version # extract the version from package.json
   - ps: Update-AppveyorBuild -Version "$env:package_version-$env:APPVEYOR_BUILD_NUMBER" # use the package.json version
